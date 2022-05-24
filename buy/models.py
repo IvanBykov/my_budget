@@ -3,10 +3,28 @@ from django.db import models
 
 # Create your models here.
 
+
+class Brand(models.Model):
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    brand = models.CharField(max_length=50)
-    category = models.CharField(max_length=50)
+    brand = models.ForeignKey(Brand, models.PROTECT)
+    category = models.ForeignKey(Category, models.PROTECT)
+
+    def __str__(self):
+        return self.name
 
 
 class Unit(models.Model):
@@ -27,7 +45,12 @@ class Magazine(models.Model):
 
 class Buy(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    amount = models.PositiveIntegerField()
+    amount = models.FloatField()
     date = models.DateField()
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
     magazine = models.ForeignKey(Magazine, models.PROTECT)
+    price = models.FloatField(null=True)
+
+    def __str__(self):
+        return f'{self.product} - {self.magazine} - {self.date}'
+
