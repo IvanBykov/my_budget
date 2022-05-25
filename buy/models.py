@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
 # Create your models here.
@@ -20,8 +21,8 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    brand = models.ForeignKey(Brand, models.PROTECT, null=True)
-    category = models.ForeignKey(Category, models.PROTECT, null=True)
+    brand = models.ForeignKey(Brand, models.PROTECT, null=True, blank=True)
+    category = models.ForeignKey(Category, models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -37,7 +38,7 @@ class Unit(models.Model):
 
 class Magazine(models.Model):
     name = models.CharField(max_length=50)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -45,12 +46,11 @@ class Magazine(models.Model):
 
 class Buy(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    amount = models.FloatField()
+    amount = models.FloatField(validators=[MinValueValidator(0), ])
     date = models.DateField()
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
     magazine = models.ForeignKey(Magazine, models.PROTECT)
-    price = models.FloatField()
+    price = models.FloatField(validators=[MinValueValidator(0), ])
 
     def __str__(self):
         return f'{self.product} - {self.magazine} - {self.date}'
-
