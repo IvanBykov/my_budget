@@ -21,7 +21,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    brand = models.ForeignKey(Brand, models.PROTECT, null=True, blank=True)
+    # brand = models.ForeignKey(Brand, models.PROTECT, null=True, blank=True)
     category = models.ForeignKey(Category, models.PROTECT, null=True, blank=True)
 
     def __str__(self):
@@ -51,6 +51,7 @@ class Buy(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
     magazine = models.ForeignKey(Magazine, models.PROTECT)
     price = models.FloatField(validators=[MinValueValidator(0), ])
+    brand = models.ForeignKey(Brand, models.PROTECT, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.product} - {self.magazine} - {self.date}'
+        return f'{self.product} - { self.brand } {self.magazine} - {self.date}'
