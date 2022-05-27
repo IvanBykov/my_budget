@@ -1,0 +1,13 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Все покупки {% endblock %}
+
+{% block content %}
+
+    <h2>Все покупки </h2>
+    <ul>
+        {% for buy in object_list %}
+            <li> {{ buy.price }}  </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
