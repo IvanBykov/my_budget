@@ -1,0 +1,13 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Все продукты {% endblock %}
+
+{% block content %}
+
+    <h2>Все продукты </h2>
+    <ul>
+        {% for product in object_list %}
+            <li> <a href="{{ product.get_url }}"> {{ product.name }} - {{ product.category }} </a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

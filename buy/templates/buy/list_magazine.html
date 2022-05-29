@@ -1,0 +1,13 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Все брэнды {% endblock %}
+
+{% block content %}
+
+    <h2>Все брэнды </h2>
+    <ul>
+        {% for magazine in object_list %}
+            <li> <a href="{{ magazine.get_url }}"> {{ magazine.name }} - {{ magazine.address }} </a> </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

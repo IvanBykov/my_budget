@@ -1,0 +1,13 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Все брэнды {% endblock %}
+
+{% block content %}
+
+    <h2>Все брэнды </h2>
+    <ul>
+        {% for unit in object_list %}
+            <li> <a href="{{ unit.get_url }}"> {{ unit.name }} - {{ unit.name_mini }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

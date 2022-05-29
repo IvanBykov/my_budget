@@ -1,0 +1,16 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Меню {% endblock %}
+
+{% block content %}
+
+    <h2> Меню </h2>
+    <ul>
+        <li> <a href="{% url 'list-buy' %}"> Покупки </a> </li>
+        <li> <a href="{% url 'list-product' %}"> Товары </a> </li>
+        <li> <a href="{% url 'list-brand' %}"> Брэнды </a> </li>
+        <li> <a href="{% url 'list-category' %}"> Категории товаров </a> </li>
+        <li> <a href="{% url 'list-unit' %}"> Единицы измерения </a> </li>
+        <li> <a href="{% url 'list-magazine' %}"> Список магазинов </a> </li>
+    </ul>
+{% endblock %}

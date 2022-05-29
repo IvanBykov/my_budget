@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.urls import reverse
 
 
 # Create your models here.
@@ -11,12 +12,18 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
+    def get_url(self):
+        return reverse('update-brand', args=[self.id])
+
 
 class Category(models.Model):
     name = models.CharField(max_length=60)
 
     def __str__(self):
         return self.name
+
+    def get_url(self):
+        return reverse('update-category', args=[self.id])
 
 
 class Product(models.Model):
@@ -27,6 +34,9 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def get_url(self):
+        return reverse('update-product', args=[self.id])
+
 
 class Unit(models.Model):
     name = models.CharField(max_length=20)
@@ -35,6 +45,9 @@ class Unit(models.Model):
     def __str__(self):
         return self.name
 
+    def get_url(self):
+        return reverse('update-unit', args=[self.id])
+
 
 class Magazine(models.Model):
     name = models.CharField(max_length=50)
@@ -42,6 +55,9 @@ class Magazine(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_url(self):
+        return reverse('update-magazine', args=[self.id])
 
 
 class Buy(models.Model):
@@ -55,3 +71,6 @@ class Buy(models.Model):
 
     def __str__(self):
         return f'{self.product} - { self.brand } {self.magazine} - {self.date}'
+
+    def get_url(self):
+        return reverse('update-buy', args=[self.id])

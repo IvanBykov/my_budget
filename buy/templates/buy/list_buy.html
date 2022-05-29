@@ -7,7 +7,7 @@
     <h2>Все покупки </h2>
     <ul>
         {% for buy in object_list %}
-            <li> {{ buy.price }}  </li>
+            <li> <a href="{{ buy.get_url }}"> {{ buy.product }} - {{ buy.brand }} - {{ buy.price }} - {{ buy.amount }} - {{ buy.date }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
