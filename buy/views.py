@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from .models import Product, Buy, Brand, Category, Unit, Magazine
 from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm
 from django.http import HttpResponseRedirect
@@ -15,6 +15,13 @@ def index(request):
 class ListProduct(ListView):
     template_name = 'buy/list_product.html'
     model = Product
+
+
+class CreateProduct(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'buy/product.html'
+    success_url = '/product'
 
 
 def update_product(request, id_product: int):
@@ -35,6 +42,13 @@ class ListBuy(ListView):
     model = Buy
 
 
+class CreateBuy(CreateView):
+    model = Buy
+    form_class = BuyForm
+    template_name = 'buy/buy.html'
+    success_url = '/buy'
+
+
 def update_buy(request, id_buy: int):
     buy = Buy.objects.get(id=id_buy)
     if request.method == 'POST':
@@ -51,6 +65,13 @@ def update_buy(request, id_buy: int):
 class ListBrand(ListView):
     template_name = 'buy/list_brand.html'
     model = Brand
+
+
+class CreateBrand(CreateView):
+    model = Brand
+    form_class = BrandForm
+    template_name = 'buy/brand.html'
+    success_url = '/brand'
 
 
 def update_brand(request, id_brand: int):
@@ -72,6 +93,13 @@ class ListCategory(ListView):
     model = Category
 
 
+class CreateCategory(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'buy/category.html'
+    success_url = '/category'
+
+
 def update_category(request, id_category: int):
     category = Category.objects.get(id=id_category)
     if request.method == 'POST':
@@ -88,6 +116,13 @@ def update_category(request, id_category: int):
 class ListUnit(ListView):
     template_name = 'buy/list_unit.html'
     model = Unit
+
+
+class CreateUnit(CreateView):
+    model = Unit
+    form_class = UnitForm
+    template_name = 'buy/unit.html'
+    success_url = '/unit'
 
 
 def update_unit(request, id_unit: int):
@@ -119,3 +154,10 @@ def update_magazine(request, id_magazine: int):
     else:
         form = MagazineForm(instance=magazine)
     return render(request, 'buy/magazine.html', context={'form': form})
+
+
+class CreateMagazine(CreateView):
+    model = Magazine
+    form_class = MagazineForm
+    template_name = 'buy/magazine.html'
+    success_url = '/magazine'
