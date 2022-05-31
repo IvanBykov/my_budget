@@ -59,6 +59,9 @@ class Magazine(models.Model):
     def get_url(self):
         return reverse('update-magazine', args=[self.id])
 
+    def del_url(self):
+        return reverse('del-magazine', args=[self.id])
+
 
 class Buy(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)

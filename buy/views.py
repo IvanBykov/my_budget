@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Product, Buy, Brand, Category, Unit, Magazine
 from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm
 from django.http import HttpResponseRedirect
@@ -143,16 +143,40 @@ class ListMagazine(ListView):
     model = Magazine
 
 
+class UpdateMagazine(UpdateView):
+    model = Magazine
+    form_class = MagazineForm
+    template_name = 'buy/magazine.html'
+    success_url = '/magazine'
+
+
+class DeleteMagazine(DeleteView):
+    model = Magazine
+    #form_class = MagazineForm
+    # context_object_name = 'form'
+    template_name = 'buy/magazine.html'
+    success_url = '/magazine'
+
+
 def update_magazine(request, id_magazine: int):
     magazine = Magazine.objects.get(id=id_magazine)
     if request.method == 'POST':
         form = MagazineForm(request.POST, instance=magazine)
         if form.is_valid():
-            form.cleaned_data
+            # form.cleaned_data
             form.save()
             return HttpResponseRedirect(reverse('list-magazine'))
     else:
         form = MagazineForm(instance=magazine)
+    return render(request, 'buy/magazine.html', context={'form': form})
+
+
+def del_magazine(request, id_magazine: int):
+    magazine = Magazine.objects.get(id=id_magazine)
+    if request.method == 'POST':
+        magazine.delete()
+        return HttpResponseRedirect(reverse('list-magazine'))
+    form = MagazineForm(instance=magazine)
     return render(request, 'buy/magazine.html', context={'form': form})
 
 

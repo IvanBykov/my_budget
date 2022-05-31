@@ -19,6 +19,9 @@ urlpatterns = [
     path('unit/<int:id_unit>', views.update_unit, name='update-unit'),
     path('unit/new', views.CreateUnit.as_view(), name='create-unit'),
     path('magazine/', views.ListMagazine.as_view(), name='list-magazine'),
-    path('magazine/<int:id_magazine>', views.update_magazine, name='update-magazine'),
-    path('magazine/new', views.CreateMagazine.as_view(), name='create-magazin')
+    #path('magazine/<int:id_magazine>', views.update_magazine, name='update-magazine'),
+    path('magazine/<int:pk>', views.UpdateMagazine.as_view(), name='update-magazine'),
+    path('magazine/new', views.CreateMagazine.as_view(), name='create-magazine'),
+    #path('magazine/del/<int:id_magazine>', views.del_magazine, name='del-magazine'),
+    path('magazine/del/<int:pk>', views.DeleteMagazine.as_view(), name='del-magazine'),
 ]

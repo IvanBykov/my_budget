@@ -31,6 +31,7 @@ class UnitForm(forms.ModelForm):
         model = Unit
         fields = '__all__'
 
+
 class MagazineForm(forms.ModelForm):
     class Meta:
         model = Magazine
