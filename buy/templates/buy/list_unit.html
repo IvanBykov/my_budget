@@ -7,7 +7,7 @@
     <h2>Все брэнды </h2>
     <ul>
         {% for unit in object_list %}
-            <li> <a href="{{ unit.get_url }}"> {{ unit.name }} - {{ unit.name_mini }}</a></li>
+            <li> <a href="{{ unit.get_url }}"> {{ unit.name }} - {{ unit.name_mini }}</a> - <a href=" {{ unit.del_url }} ">Удалить запись</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

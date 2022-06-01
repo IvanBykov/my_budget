@@ -7,7 +7,7 @@
     <h2>Все продукты </h2>
     <ul>
         {% for product in object_list %}
-            <li> <a href="{{ product.get_url }}"> {{ product.name }} - {{ product.category }} </a></li>
+            <li> <a href="{{ product.get_url }}"> {{ product.name }} - {{ product.category }} </a> - <a href=" {{ product.del_url }} ">Удалить запись</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

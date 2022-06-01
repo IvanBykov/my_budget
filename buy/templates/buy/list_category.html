@@ -7,7 +7,7 @@
     <h2>Все категории </h2>
     <ul>
         {% for category in object_list %}
-            <li> <a href="{{ category.get_url }}"> {{ category.name }} </a></li>
+            <li> <a href="{{ category.get_url }}"> {{ category.name }} </a> - <a href=" {{ category.del_url }} ">Удалить запись</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

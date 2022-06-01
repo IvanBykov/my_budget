@@ -1,0 +1,15 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Удаление записи {% endblock %}
+
+{% block content %}
+
+    <h2> Удаление записи </h2>
+    <h3> Вы действительно хотите удалить: </h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ object }}
+
+        <button type="submit">Удалить</button>
+    </form>
+{% endblock %}

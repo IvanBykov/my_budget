@@ -31,6 +31,12 @@ class UpdateProduct(UpdateView):
     success_url = '/product'
 
 
+class DeleteProduct(DeleteView):
+    model = Product
+    template_name = 'buy/del_form.html'
+    success_url = '/product'
+
+
 class ListBuy(ListView):
     template_name = 'buy/list_buy.html'
     model = Buy
@@ -50,6 +56,12 @@ class UpdateBuy(UpdateView):
     success_url = '/buy'
 
 
+class DeleteBuy(DeleteView):
+    model = Buy
+    template_name = 'buy/del_form.html'
+    success_url = '/buy'
+
+
 class ListBrand(ListView):
     template_name = 'buy/list_brand.html'
     model = Brand
@@ -61,10 +73,17 @@ class CreateBrand(CreateView):
     template_name = 'buy/brand.html'
     success_url = '/brand'
 
+
 class UpdateBrand(UpdateView):
     model = Brand
     form_class = BrandForm
     template_name = 'buy/brand.html'
+    success_url = '/brand'
+
+
+class DeleteBrand(DeleteView):
+    model = Brand
+    template_name = 'buy/del_form.html'
     success_url = '/brand'
 
 
@@ -87,6 +106,12 @@ class UpdateCategory(UpdateView):
     success_url = '/category'
 
 
+class DeleteCategory(DeleteView):
+    model = Category
+    template_name = 'buy/del_form.html'
+    success_url = '/category'
+
+
 class ListUnit(ListView):
     template_name = 'buy/list_unit.html'
     model = Unit
@@ -106,6 +131,12 @@ class UpdateUnit(UpdateView):
     success_url = '/unit'
 
 
+class DeleteUnit(DeleteView):
+    model = Unit
+    template_name = 'buy/del_form.html'
+    success_url = '/unit'
+
+
 class ListMagazine(ListView):
     template_name = 'buy/list_magazine.html'
     model = Magazine
@@ -120,19 +151,8 @@ class UpdateMagazine(UpdateView):
 
 class DeleteMagazine(DeleteView):
     model = Magazine
-    # form_class = MagazineForm
-    # context_object_name = 'form'
-    template_name = 'buy/magazine.html'
+    template_name = 'buy/del_form.html'
     success_url = '/magazine'
-
-
-def del_magazine(request, id_magazine: int):
-    magazine = Magazine.objects.get(id=id_magazine)
-    if request.method == 'POST':
-        magazine.delete()
-        return HttpResponseRedirect(reverse('list-magazine'))
-    form = MagazineForm(instance=magazine)
-    return render(request, 'buy/magazine.html', context={'form': form})
 
 
 class CreateMagazine(CreateView):

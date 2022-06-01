@@ -15,6 +15,9 @@ class Brand(models.Model):
     def get_url(self):
         return reverse('update-brand', args=[self.id])
 
+    def del_url(self):
+        return reverse('del-brand', args=[self.id])
+
 
 class Category(models.Model):
     name = models.CharField(max_length=60)
@@ -24,6 +27,9 @@ class Category(models.Model):
 
     def get_url(self):
         return reverse('update-category', args=[self.id])
+
+    def del_url(self):
+        return reverse('del-category', args=[self.id])
 
 
 class Product(models.Model):
@@ -37,6 +43,9 @@ class Product(models.Model):
     def get_url(self):
         return reverse('update-product', args=[self.id])
 
+    def del_url(self):
+        return reverse('del-product', args=[self.id])
+
 
 class Unit(models.Model):
     name = models.CharField(max_length=20)
@@ -48,13 +57,16 @@ class Unit(models.Model):
     def get_url(self):
         return reverse('update-unit', args=[self.id])
 
+    def del_url(self):
+        return reverse('del-unit', args=[self.id])
+
 
 class Magazine(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.address}'
 
     def get_url(self):
         return reverse('update-magazine', args=[self.id])
@@ -73,7 +85,10 @@ class Buy(models.Model):
     brand = models.ForeignKey(Brand, models.PROTECT, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.product} - { self.brand } {self.magazine} - {self.date}'
+        return f'{self.product} - {self.brand} {self.magazine} - {self.date}'
 
     def get_url(self):
         return reverse('update-buy', args=[self.id])
+
+    def del_url(self):
+        return reverse('del-buy', args=[self.id])

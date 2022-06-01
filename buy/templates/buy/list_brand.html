@@ -7,7 +7,7 @@
     <h2>Все брэнды </h2>
     <ul>
         {% for brand in object_list %}
-            <li> <a href="{{ brand.get_url }}"> {{ brand.name }} </a></li>
+            <li> <a href="{{ brand.get_url }}"> {{ brand.name }} </a> - <a href=" {{ brand.del_url }} ">Удалить запись</a> </li>
         {% endfor %}
     </ul>
 {% endblock %}
