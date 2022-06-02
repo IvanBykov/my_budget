@@ -3,7 +3,9 @@
 {% block title %} Все брэнды {% endblock %}
 
 {% block content %}
-
+    {% include 'includes/navbar.html' %}
+    <br>
+    <a href=" {% url 'create-magazine' %} " > Добавить магазин </a>
     <h2>Все брэнды </h2>
     <ul>
         {% for magazine in object_list %}

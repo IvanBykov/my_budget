@@ -1,14 +1,19 @@
 {% extends 'buy/base.html' %}
 
+{% load static %}
+
+{% block css_additional %}
+    <link rel="stylesheet" href=" {% static 'buy/css/index.css' %}">
+{%endblock%}
+
 {% block title %} Меню {% endblock %}
 
 {% block content %}
-
-    <h2> Меню </h2>
+    <h1> Личный бюджет </h1>
     <ul>
-        <li> <a href="{% url 'list-buy' %}"> Покупки </a> </li>
-        <li> <a href="{% url 'list-product' %}"> Товары </a> </li>
-        <li> <a href="{% url 'list-brand' %}"> Брэнды </a> </li>
+        <li> <a href="{% url 'list-buy' %}"> Список покупок </a> </li>
+        <li> <a href="{% url 'list-product' %}"> Справочник товаров </a> </li>
+        <li> <a href="{% url 'list-brand' %}"> Справочник брэндов </a> </li>
         <li> <a href="{% url 'list-category' %}"> Категории товаров </a> </li>
         <li> <a href="{% url 'list-unit' %}"> Единицы измерения </a> </li>
         <li> <a href="{% url 'list-magazine' %}"> Список магазинов </a> </li>

@@ -1,10 +1,12 @@
 {% extends 'buy/base.html' %}
 
-{% block title %} Все брэнды {% endblock %}
+{% block title %} Все еденицы измерения {% endblock %}
 
 {% block content %}
-
-    <h2>Все брэнды </h2>
+    {% include 'includes/navbar.html' %}
+    <br>
+    <a href=" {% url 'create-unit' %} " > Добавить единицу измерения </a>
+    <h2> Все еденицы измерения </h2>
     <ul>
         {% for unit in object_list %}
             <li> <a href="{{ unit.get_url }}"> {{ unit.name }} - {{ unit.name_mini }}</a> - <a href=" {{ unit.del_url }} ">Удалить запись</a></li>

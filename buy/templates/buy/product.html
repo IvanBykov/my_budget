@@ -3,7 +3,7 @@
 {% block title %} Товар {% endblock %}
 
 {% block content %}
-
+    {% include 'includes/navbar.html' %}
     <h2> Товар </h2>
     <form method="post">
         {% csrf_token %}
