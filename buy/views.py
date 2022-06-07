@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+
 from .models import Product, Buy, Brand, Category, Unit, Magazine
 from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm
 from django.http import HttpResponseRedirect
