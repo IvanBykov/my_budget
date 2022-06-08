@@ -1,0 +1,14 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Все цены {% endblock %}
+
+{% block content %}
+    {% include 'includes/navbar.html' %}
+    <br>
+    <h2>Все цены </h2>
+    <ul>
+        {% for product in object_list %}
+            <li> {{ product.price }} - {{ product.date }} - </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -9,8 +9,16 @@ from django.urls import reverse
 
 # Create your views here.
 
+
 def index(request):
     return render(request, 'buy/index.html')
+
+
+def show_list_price(request):
+    prices = Buy.objects.all()
+    return render(request, 'buy/list_price.html', {
+        'object_list': prices
+    })
 
 
 class ListProduct(ListView):

@@ -4,6 +4,16 @@ from buy.labuda import operations
 
 
 class LabudaTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        print("setUpTestData: Run once to set up non-modified data for all class methods.")
+        pass
+
+    def setUp(self):
+        print("setUp: Run once for every test method to setup clean data.")
+        pass
+
     def test_plus(self):
         result = operations(6, 13, '+')
         self.assertEqual(19, result)
