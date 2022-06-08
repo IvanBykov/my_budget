@@ -7,8 +7,8 @@
     <br>
     <h2>Все цены </h2>
     <ul>
-        {% for product in object_list %}
-            <li> {{ product.price }} - {{ product.date }} - </li>
+        {% for price in object_list %}
+            <li> {{ price.price }} - {{ price.date }} - {{ price.product }}</li>
         {% endfor %}
     </ul>
 {% endblock %}

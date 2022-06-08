@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
@@ -15,7 +16,8 @@ def index(request):
 
 
 def show_list_price(request):
-    prices = Buy.objects.all()
+    #prices = Buy.objects.all()
+    prices = Buy.objects.filter(Q(product=5) & Q(date__gte='2022-05-23') & Q(date__lte='2022-05-24'))
     return render(request, 'buy/list_price.html', {
         'object_list': prices
     })
