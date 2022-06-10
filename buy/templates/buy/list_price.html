@@ -7,8 +7,13 @@
     <br>
     <h2>Все цены </h2>
     <ul>
-        {% for price in object_list %}
-            <li> {{ price.price }} - {{ price.date }} - {{ price.product }}</li>
+        <form action="{% url 'list-price' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit"> Запросить цены </button>
+        </form>
+        {% for product in object_list %}
+            <li> {{ product.price }} - {{ product.date }} - </li>
         {% endfor %}
     </ul>
 {% endblock %}

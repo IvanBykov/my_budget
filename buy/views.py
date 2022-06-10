@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from .models import Product, Buy, Brand, Category, Unit, Magazine
-from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm
+from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm, GetPriceForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -16,10 +16,19 @@ def index(request):
 
 
 def show_list_price(request):
+    form = GetPriceForm()
     #prices = Buy.objects.all()
-    prices = Buy.objects.filter(Q(product=5) & Q(date__gte='2022-05-23') & Q(date__lte='2022-05-24'))
+    if request.method == 'POST':
+        product = request.POST['product']
+        date_start = request.POST['date_start']
+        date_end = request.POST['date_end']
+        prices = Buy.objects.filter(Q(product=product) & Q(date__gte=date_start) & Q(date__lte=date_end))
+        return render(request, 'buy/list_price.html', {
+            'object_list': prices,
+            'form': form
+    })
     return render(request, 'buy/list_price.html', {
-        'object_list': prices
+        'form': form
     })
 
 

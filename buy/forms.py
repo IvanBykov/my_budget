@@ -2,6 +2,13 @@ from django import forms
 from .models import Brand, Buy, Product, Category, Unit, Magazine
 
 
+class GetPriceForm(forms.Form):
+    product = forms.IntegerField(label='Продукт', min_value=1)
+    #product = forms.DateTimeField(label=ugettext("Start"), widget=EventSplitDateTime())
+    date_start = forms.DateField(label='Начальная дата', widget=forms.DateInput())
+    date_end = forms.DateField(label='Конечная дата', )
+
+
 class BrandForm(forms.ModelForm):
     class Meta:
         model = Brand
