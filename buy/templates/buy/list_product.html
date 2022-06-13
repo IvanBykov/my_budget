@@ -9,7 +9,8 @@
     <h2>Все товары </h2>
     <ul>
         {% for product in object_list %}
-            <li> <a href="{{ product.get_url }}"> {{ product.name }} - {{ product.category }} </a> - <a href=" {{ product.del_url }} ">Удалить запись</a></li>
+            <li> <a href="{{ product.get_url }}"> {{ product.name }} - {{ product.category }} </a> -
+                <a href=" {{ product.get_plot_price }} " > График цены </a>- <a href=" {{ product.del_url }} ">Удалить запись</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Все цены {% endblock %}
+
+{% block content %}
+    {% include 'includes/navbar.html' %}
+    <br>
+    <h1>График изменения цены</h1>
+        <form action="{% url 'plot-price' pk %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit"> Запросить цены </button>
+        </form>
+        <br>
+        <img src="data:image/png;base64, {{ chart|safe }}">
+{% endblock %}

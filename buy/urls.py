@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     #path('buy/price', views.ListPrice.as_view(), name='list-price'),
     path('price/', views.show_list_price, name='list-price'),
+    path('price/plot/<int:pk>', views.show_plot_price, name='plot-price'),
     path('buy/', views.ListBuy.as_view(), name='list-buy'),
     path('buy/<int:pk>', views.UpdateBuy.as_view(), name='update-buy'),
     path('buy/del/<int:pk>', views.DeleteBuy.as_view(), name='del-buy'),

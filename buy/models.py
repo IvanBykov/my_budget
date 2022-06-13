@@ -46,6 +46,9 @@ class Product(models.Model):
     def del_url(self):
         return reverse('del-product', args=[self.id])
 
+    def get_plot_price(self):
+        return reverse('plot-price', args=[self.id])
+
 
 class Unit(models.Model):
     name = models.CharField(max_length=20)
