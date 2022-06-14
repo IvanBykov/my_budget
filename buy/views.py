@@ -25,9 +25,9 @@ def show_plot_price(request, pk: int):
         date_end = request.POST['date_end']
         prices = Buy.objects.filter(Q(product=pk) & Q(date__gte=date_start) & Q(date__lte=date_end)).order_by(
             'date')
-        x = [x.price for x in prices]
-        y = [y.date for y in prices]
-        chart = get_plot(y, x, prices[0].product)
+        y = [y.unit_price() for y in prices]
+        x = [x.date for x in prices]
+        chart = get_plot(x, y, f'{prices[0].product} за {prices[0].unit}')
         return render(request, 'buy/plot_price.html', {
             'chart': chart,
             'form': form,
@@ -35,9 +35,9 @@ def show_plot_price(request, pk: int):
         })
     #prices = Buy.objects.filter(Q(product=pk) & Q(date__gte='2022-05-20') & Q(date__lte='2022-05-27')).order_by('date')
     prices = Buy.objects.filter(Q(product=pk)).order_by('date')
-    x = [x.price for x in prices]
-    y = [y.date for y in prices]
-    chart = get_plot(y, x, prices[0].product)
+    y = [y.unit_price() for y in prices]
+    x = [x.date for x in prices]
+    chart = get_plot(x, y, f'{prices[0].product} за {prices[0].unit}')
     return render(request, 'buy/plot_price.html', {
         'chart': chart,
         'form': form,

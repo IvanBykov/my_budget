@@ -95,3 +95,6 @@ class Buy(models.Model):
 
     def del_url(self):
         return reverse('del-buy', args=[self.id])
+
+    def unit_price(self):
+        return self.price / self.amount
