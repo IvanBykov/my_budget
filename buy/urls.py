@@ -30,4 +30,5 @@ urlpatterns = [
     path('magazine/<int:pk>', views.UpdateMagazine.as_view(), name='update-magazine'),
     path('magazine/new', views.CreateMagazine.as_view(), name='create-magazine'),
     path('magazine/del/<int:pk>', views.DeleteMagazine.as_view(), name='del-magazine'),
+    path('load_buy', views.LoadBuy.as_view(), name='load_buy'),
 ]

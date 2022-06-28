@@ -1,7 +1,9 @@
 from django.db.models import Q
 from django.shortcuts import render
+from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
+from .libs.import_buy import import_buy
 from .models import Product, Buy, Brand, Category, Unit, Magazine
 from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm, GetPriceForm, GetDatePeriod
 from django.http import HttpResponseRedirect
@@ -210,3 +212,19 @@ class CreateMagazine(CreateView):
     form_class = MagazineForm
     template_name = 'buy/magazine.html'
     success_url = '/magazine'
+
+def storage_file(file):
+    with open('buy_tmp/new_email.eml', 'wb+') as new_file:
+        for chunk in file.chunks():
+            new_file.write(chunk)
+
+class LoadBuy(View):
+    def get(self, request):
+        return render(request, 'buy/load_buy.html')
+
+    def post(self, request):
+        storage_file(request.FILES['email'])
+        products = import_buy()
+        return render(request, 'buy/load_list_buy.html', context={
+            'products': products
+        })

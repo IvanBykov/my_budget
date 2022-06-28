@@ -1,0 +1,14 @@
+{% extends 'buy/base.html' %}
+
+{% block title %} Все брэнды {% endblock %}
+
+{% block content %}
+    {% include 'includes/navbar.html' %}
+    <br>
+    <h2>Загрузка списка покупок </h2>
+    <ul>
+        {% for product in products %}
+            <li> {{ product.0 }} - {{ product.1 }} - {{ product.2 }} - {{ product.3 }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
