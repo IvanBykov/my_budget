@@ -5,15 +5,26 @@
 {% block content %}
     {% include 'includes/navbar.html' %}
     <br>
-    <h2>Все цены </h2>
+    <h2>Таблица цен на {{ object_list.0.product.name }} </h2>
     <ul>
-        <form action="{% url 'list-price' %}" method="post">
+        <form action="{% url 'list-price' pk %}" method="post">
             {% csrf_token %}
             {{ form }}
             <button type="submit"> Запросить цены </button>
         </form>
-        {% for product in object_list %}
-            <li> {{ product.price }} - {{ product.date }} - </li>
-        {% endfor %}
+        <table>
+            <tr>
+                <th>Цена</th>
+                <th>Дата</th>
+            </tr>
+                {% for product in object_list %}
+                    <tr>
+                        <td> {{ product.price }} </td>
+                        <td> {{ product.date|date:"Y-m-d" }} </td>
+                    </tr>
+                {% endfor %}
+        </table>
+        <br>
+        <p> За период с {{ date_start|date:"Y-m-d"}} по {{ date_end|date:"Y-m-d" }} цена изменилась на {{ delta_price|floatformat:2 }} %</p>
     </ul>
 {% endblock %}

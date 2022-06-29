@@ -7,9 +7,24 @@
     <br>
     <a href=" {% url 'create-buy' %} " > Добавить покупку </a>
     <h2>Все покупки </h2>
-    <ul>
+    <table>
+        <tr>
+            <th>Товар</th>
+            <th>Брэнд</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Дата</th>
+            <th>Удалить запись</th>
+        </tr>
         {% for buy in object_list %}
-            <li> <a href="{{ buy.get_url }}"> {{ buy.product }} - {{ buy.brand }} - {{ buy.price }} - {{ buy.amount }} - {{ buy.date }}</a> - <a href=" {{ buy.del_url }} ">Удалить запись</a></li>
+            <tr>
+                <td> <a href="{{ buy.get_url }}"> {{ buy.product }} </a> </td>
+                <td> {{ buy.brand }} </td>
+                <td> {{ buy.price }} </td>
+                <td> {{ buy.amount }} </td>
+                <td> {{ buy.date|date:"Y-m-d" }} </td>
+                <td> <a href=" {{ buy.del_url }} ">Удалить запись</a> </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

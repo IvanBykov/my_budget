@@ -7,9 +7,16 @@
     <br>
     <a href=" {% url 'create-category' %} " > Добавить категорию </a>
     <h2>Все категории </h2>
-    <ul>
+    <table>
+        <tr>
+            <th>Категория</th>
+            <th>Удалить запись</th>
+        </tr>
         {% for category in object_list %}
-            <li> <a href="{{ category.get_url }}"> {{ category.name }} </a> - <a href=" {{ category.del_url }} ">Удалить запись</a></li>
+            <tr>
+                <td> <a href="{{ category.get_url }}"> {{ category.name }} </a> </td>
+                <td> <a href=" {{ category.del_url }} ">Удалить запись</a> </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

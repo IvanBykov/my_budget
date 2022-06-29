@@ -45,22 +45,33 @@ def show_plot_price(request, pk: int):
         'form': form,
         'pk': pk
     })
+def delta_price(list_buy):
+    delta = ((list_buy[len(list_buy) - 1].price - list_buy[0].price) / list_buy[0].price) * 100
+    return delta
 
-
-def show_list_price(request):
-    form = GetPriceForm()
+def show_list_price(request, pk: int):
+    form = GetDatePeriod()
     # prices = Buy.objects.all()
     if request.method == 'POST':
-        product = request.POST['product']
         date_start = request.POST['date_start']
         date_end = request.POST['date_end']
-        prices = Buy.objects.filter(Q(product=product) & Q(date__gte=date_start) & Q(date__lte=date_end))
+        prices = Buy.objects.filter(Q(product=pk) & Q(date__gte=date_start) & Q(date__lte=date_end))
         return render(request, 'buy/list_price.html', {
+            'date_start': date_start,
+            'date_end': date_end,
+            'delta_price': delta_price(prices),
             'object_list': prices,
-            'form': form
+            'form': form,
+            'pk': pk,
         })
+    prices = Buy.objects.filter(Q(product=pk)).order_by('date')
     return render(request, 'buy/list_price.html', {
-        'form': form
+        'date_start': prices[0].date,
+        'date_end': prices[len(prices) - 1].date,
+        'delta_price': delta_price(prices),
+        'object_list': prices,
+        'form': form,
+        'pk': pk,
     })
 
 

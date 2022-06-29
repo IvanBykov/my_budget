@@ -49,6 +49,9 @@ class Product(models.Model):
     def get_plot_price(self):
         return reverse('plot-price', args=[self.id])
 
+    def get_list_price(self):
+        return reverse('list-price', args=[self.id])
+
 
 class Unit(models.Model):
     name = models.CharField(max_length=20)

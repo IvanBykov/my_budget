@@ -7,10 +7,20 @@
     <br>
     <a href=" {% url 'create-product' %} " > Добавить товар </a>
     <h2>Все товары </h2>
-    <ul>
+    <table>
+        <tr>
+            <th>Товар</th>
+            <th>График цены</th>
+            <th>История цены</th>
+            <th>Удалить запись</th>
+        </tr>
         {% for product in object_list %}
-            <li> <a href="{{ product.get_url }}"> {{ product.name }} - {{ product.category }} </a> -
-                <a href=" {{ product.get_plot_price }} " > График цены </a>- <a href=" {{ product.del_url }} ">Удалить запись</a></li>
+            <tr>
+                <td> <a href=" {{ product.get_url }}"> {{ product.name }} - {{ product.category }} </a> </td>
+                <td> <a href=" {{ product.get_plot_price }} " > График цены </a> </td>
+                <td> <a href=" {{ product.get_list_price }} " > История цены </a> </td>
+                <td> <a href=" {{ product.del_url }} ">Удалить запись</a></td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

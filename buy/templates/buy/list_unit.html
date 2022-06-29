@@ -7,9 +7,18 @@
     <br>
     <a href=" {% url 'create-unit' %} " > Добавить единицу измерения </a>
     <h2> Все еденицы измерения </h2>
-    <ul>
+    <table>
+        <tr>
+            <th>Наименование</th>
+            <th>Краткое наименование</th>
+            <th>Удалить запись</th>
+        </tr>
         {% for unit in object_list %}
-            <li> <a href="{{ unit.get_url }}"> {{ unit.name }} - {{ unit.name_mini }}</a> - <a href=" {{ unit.del_url }} ">Удалить запись</a></li>
+            <tr>
+                <td> <a href="{{ unit.get_url }}"> {{ unit.name }} </a> </td>
+                <td> {{ unit.name_mini }} </td>
+                <td> <a href=" {{ unit.del_url }} ">Удалить запись</a> </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

@@ -7,9 +7,16 @@
     <br>
     <a href=" {% url 'create-brand' %} " > Добавить брэнд </a>
     <h2>Все брэнды </h2>
-    <ul>
+    <table>
+        <tr>
+            <th>Брэнд</th>
+            <th>Удалить запись</th>
+        </tr>
         {% for brand in object_list %}
-            <li> <a href="{{ brand.get_url }}"> {{ brand.name }} </a> - <a href=" {{ brand.del_url }} ">Удалить запись</a> </li>
+            <tr>
+                <td> <a href="{{ brand.get_url }}"> {{ brand.name }} </a> </td>
+                <td><a href=" {{ brand.del_url }} "> Удалить запись </a> </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}
