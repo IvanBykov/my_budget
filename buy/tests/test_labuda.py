@@ -15,17 +15,21 @@ class LabudaTestCase(TestCase):
         pass
 
     def test_plus(self):
+        #print('test_plus')
         result = operations(6, 13, '+')
         self.assertEqual(19, result)
 
     def test_minus(self):
+        #print('test_minus')
         result = operations(6, 13, '-')
         self.assertEqual(-7, result)
 
     def test_multiply(self):
+        #print('test_multiply')
         result = operations(6, 13, '*')
         self.assertEqual(78, result)
 
     def test_divizion(self):
+        #print('test_divizion')
         result = operations(20, 5, '/')
         self.assertEqual(4, result)
