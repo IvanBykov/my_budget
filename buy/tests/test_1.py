@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 
-from buy.models import Brand, Category, Product
+from buy.models import Brand, Category, Product, Unit, Magazine, Buy
 
 
 class Settings(TestCase):
@@ -14,18 +14,32 @@ class Settings(TestCase):
             name='продукт',
             category=cls.category
         )
+        cls.unit = Unit.objects.create(
+            name='метр',
+            name_mini='м'
+        )
+        cls.magazine = Magazine.objects.create(
+            name='Магнит',
+            address='адрес'
+        )
+        cls.buy = Buy(
+            product=cls.product,
+            amount=2,
+            date='2022-06-12',
+            unit=cls.unit,
+            magazine=cls.magazine,
+            price=10,
+            brand=cls.brand
+        )
 
 
 class BrandModelTest(Settings):
     def test_validators_value(self):
-        print('----------------brand------------------')
-        print(self.brand.name)
         self.assertEqual('бренд', self.brand.name)
-        print(self.brand._meta.get_field('name').validators[0].limit_value)
         self.assertEqual(40, self.brand._meta.get_field('name').max_length)
 
     def test_validator_fail(self):
-        brand_invalid = Brand(name='g'*41)
+        brand_invalid = Brand(name='g' * 41)
         with self.assertRaises(ValidationError):
             brand_invalid.full_clean()
             brand_invalid.save()
@@ -37,7 +51,7 @@ class CategoryModelTest(Settings):
         self.assertEqual(60, self.category._meta.get_field('name').max_length)
 
     def test_validator_fail(self):
-        s1 = 'ы'*61
+        s1 = 'ы' * 61
         category_invalid = Category(name=s1)
         with self.assertRaises(ValidationError):
             category_invalid.full_clean()
@@ -52,7 +66,55 @@ class ProductModelTest(Settings):
 
     def test_validater_fail(self):
         product_invalid = Product(
-            name='a'*101)
+            name='a' * 101)
         with self.assertRaises(ValidationError):
             product_invalid.full_clean()
             product_invalid.save()
+
+
+class UnitModelTest(Settings):
+    def test_validator_value(self):
+        self.assertEqual('метр', self.unit.name)
+        self.assertEqual(20, self.unit._meta.get_field('name').max_length)
+        self.assertEqual('м', self.unit.name_mini)
+        self.assertEqual(5, self.unit._meta.get_field('name_mini').max_length)
+
+    def test_validater_fail(self):
+        unit_invalid = Unit(name='f' * 21, name_mini='s')
+        with self.assertRaises(ValidationError):
+            unit_invalid.full_clean()
+            unit_invalid.save()
+        unit_invalid = Unit(name='d' * 21, name_mini='f' * 5)
+        with self.assertRaises(ValidationError):
+            unit_invalid.full_clean()
+            unit_invalid.save()
+
+
+class MagazineModelTest(Settings):
+    def test_validator_value(self):
+        self.assertEqual('Магнит', self.magazine.name)
+        self.assertEqual(50, self.magazine._meta.get_field('name').max_length)
+        self.assertEqual('адрес', self.magazine.address)
+        self.assertEqual(100, self.magazine._meta.get_field('address').max_length)
+
+    def test_validator_fail(self):
+        magazine_invalid = Magazine(name='d' * 51)
+        with self.assertRaises(ValidationError):
+            magazine_invalid.full_clean()
+            magazine_invalid.save()
+        magazine_invalid = Magazine(name='d' * 20, address='w' * 101)
+        with self.assertRaises(ValidationError):
+            magazine_invalid.full_clean()
+            magazine_invalid.save()
+
+
+class BuyModelTest(Settings):
+    def test_validator_value(self):
+        self.assertEqual('продукт', self.buy.product.name)
+        self.assertEqual(2, self.buy.amount)
+        self.assertEqual('2022-06-12', self.buy.date)
+        self.assertEqual('метр', self.buy.unit.name)
+        self.assertEqual('Магнит', self.buy.magazine.name)
+        self.assertEqual(10, self.buy.price)
+        self.assertEqual('бренд', self.buy.brand.name)
+
