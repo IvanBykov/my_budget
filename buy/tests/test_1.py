@@ -62,7 +62,7 @@ class ProductModelTest(Settings):
     def test_validator_value(self):
         self.assertEqual('продукт', self.product.name)
         self.assertEqual(100, self.product._meta.get_field('name').max_length)
-        print(self.product._meta.get_field('category'))
+        print(self.product._meta.get_field('category').name)
 
     def test_validater_fail(self):
         product_invalid = Product(
@@ -118,3 +118,9 @@ class BuyModelTest(Settings):
         self.assertEqual(10, self.buy.price)
         self.assertEqual('бренд', self.buy.brand.name)
 
+    def test_validator_fail(self):
+        buy_invalid = Buy(amount=-1)
+        print(buy_invalid.amount)
+        with self.assertRaises(ValidationError):
+            buy_invalid.full_clean()
+            buy_invalid.save()
