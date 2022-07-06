@@ -22,7 +22,7 @@ class Settings(TestCase):
             name='Магнит',
             address='адрес'
         )
-        cls.buy = Buy(
+        cls.buy = Buy.objects.create(
             product=cls.product,
             amount=2,
             date='2022-06-12',

@@ -35,7 +35,7 @@ def show_plot_price(request, pk: int):
             'form': form,
             'pk': pk
         })
-    #prices = Buy.objects.filter(Q(product=pk) & Q(date__gte='2022-05-20') & Q(date__lte='2022-05-27')).order_by('date')
+    # prices = Buy.objects.filter(Q(product=pk) & Q(date__gte='2022-05-20') & Q(date__lte='2022-05-27')).order_by('date')
     prices = Buy.objects.filter(Q(product=pk)).order_by('date')
     y = [y.unit_price() for y in prices]
     x = [x.date for x in prices]
@@ -45,9 +45,12 @@ def show_plot_price(request, pk: int):
         'form': form,
         'pk': pk
     })
+
+
 def delta_price(list_buy):
     delta = ((list_buy[len(list_buy) - 1].price - list_buy[0].price) / list_buy[0].price) * 100
     return delta
+
 
 def show_list_price(request, pk: int):
     form = GetDatePeriod()
@@ -224,10 +227,12 @@ class CreateMagazine(CreateView):
     template_name = 'buy/magazine.html'
     success_url = '/magazine'
 
+
 def storage_file(file):
     with open('buy_tmp/new_email.eml', 'wb+') as new_file:
         for chunk in file.chunks():
             new_file.write(chunk)
+
 
 class LoadBuy(View):
     def get(self, request):
