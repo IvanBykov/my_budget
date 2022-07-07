@@ -63,3 +63,16 @@ class DeleteBuyViewTest(Settings):
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/del_form.html', response.template_name[0])
+
+class ListBrandViewTest(Settings):
+    def test_list_brand_view(self):
+        url = reverse('list-brand')
+        response = self.client.get(url)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual('buy/list_brand.html', response.template_name[0])
+
+class LoadBuyViewTest(Settings):
+    def test_load_buy_view(self):
+        url = reverse('load_buy')
+        response = self.client.get(url)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)

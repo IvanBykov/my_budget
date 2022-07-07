@@ -5,10 +5,8 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from .libs.import_buy import import_buy
 from .models import Product, Buy, Brand, Category, Unit, Magazine
-from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm, GetPriceForm, GetDatePeriod
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from .utils import get_plot
+from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm, GetDatePeriod
+from buy.libs.utils import get_plot, delta_price
 
 
 # Create your views here.
@@ -45,11 +43,6 @@ def show_plot_price(request, pk: int):
         'form': form,
         'pk': pk
     })
-
-
-def delta_price(list_buy):
-    delta = ((list_buy[len(list_buy) - 1].price - list_buy[0].price) / list_buy[0].price) * 100
-    return delta
 
 
 def show_list_price(request, pk: int):

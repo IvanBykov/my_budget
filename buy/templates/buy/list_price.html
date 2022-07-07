@@ -5,7 +5,7 @@
 {% block content %}
     {% include 'includes/navbar.html' %}
     <br>
-    <h2>Таблица цен на {{ object_list.0.product.name }} </h2>
+    <h2>Таблица цен на {{ object_list.0.product.name }} за {{ object_list.0.unit.name }}</h2>
     <ul>
         <form action="{% url 'list-price' pk %}" method="post">
             {% csrf_token %}
@@ -19,7 +19,7 @@
             </tr>
                 {% for product in object_list %}
                     <tr>
-                        <td> {{ product.price }} </td>
+                        <td> {{ product.unit_price }} </td>
                         <td> {{ product.date|date:"Y-m-d" }} </td>
                     </tr>
                 {% endfor %}
