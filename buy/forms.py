@@ -8,10 +8,12 @@ class GetPriceForm(forms.Form):
     date_start = forms.DateField(label='Начальная дата', widget=forms.DateInput())
     date_end = forms.DateField(label='Конечная дата', )
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class GetDatePeriod(forms.Form):
-    date_start = forms.DateField(label='Начальная дата (ГГГГ-ММ-ДД)', widget=forms.DateInput())
-    date_end = forms.DateField(label='Конечная дата (ГГГГ-ММ-ДД)', )
+    date_start = forms.DateField(label='Начальная дата (ГГГГ-ММ-ДД)', widget=DateInput()) #, initial='2022-04-01')
+    date_end = forms.DateField(label='Конечная дата (ГГГГ-ММ-ДД)', widget=DateInput()) #, initial='2022-06-30')
 
 
 class BrandForm(forms.ModelForm):
