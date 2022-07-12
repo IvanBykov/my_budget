@@ -2,18 +2,12 @@ from django import forms
 from .models import Brand, Buy, Product, Category, Unit, Magazine
 
 
-class GetPriceForm(forms.Form):
-    product = forms.IntegerField(label='Продукт (id)', min_value=1)
-    # product = forms.DateTimeField(label=ugettext("Start"), widget=EventSplitDateTime())
-    date_start = forms.DateField(label='Начальная дата', widget=forms.DateInput())
-    date_end = forms.DateField(label='Конечная дата', )
-
 class DateInput(forms.DateInput):
     input_type = 'date'
 
 class GetDatePeriod(forms.Form):
-    date_start = forms.DateField(label='Начальная дата (ГГГГ-ММ-ДД)', widget=DateInput()) #, initial='2022-04-01')
-    date_end = forms.DateField(label='Конечная дата (ГГГГ-ММ-ДД)', widget=DateInput()) #, initial='2022-06-30')
+    date_start = forms.DateField(label='Начальная дата (ГГГГ-ММ-ДД)', widget=DateInput())
+    date_end = forms.DateField(label='Конечная дата (ГГГГ-ММ-ДД)', widget=DateInput())
 
 
 class BrandForm(forms.ModelForm):

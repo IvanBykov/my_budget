@@ -31,7 +31,10 @@ def get_plot(x, y, product):
 
 def delta_price(list_buy):
     # возвращает изменение в % между первым и последним элементом списка
-    first_value = list_buy[0].unit_price()
-    last_value = list_buy[len(list_buy)-1].unit_price()
-    delta = (last_value - first_value) / first_value * 100
-    return delta
+    if len(list_buy) > 0:
+        first_value = list_buy[0].unit_price()
+        last_value = list_buy[len(list_buy)-1].unit_price()
+        delta = (last_value - first_value) / first_value * 100
+        return delta
+    else:
+        return 0
