@@ -4,11 +4,22 @@
 
 {% block content %}
     {% include 'includes/navbar.html' %}
-    <h2> Выберите файл </h2>
+    <h2> Загрузка покупок из письма во временную таблицу. Выберите файл </h2>
+    {{ message }}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="email">
+        <label  for="name">Дата чека</label>
         <br>
+        <input type="date" name="date" id="name">
+        <br>
+        {% for magazine in magazines %}
+            <input type="radio" id="{{ magazine.pk }}" name="fav_magazine" value="{{ magazine.pk }}">
+         <label for="{{ magazine.pk }}"> {{ magazine.name }} </label><br>
+        {% endfor %}
+        <label  for="file">Файл</label>
+        <br>
+        <input type="file" name="email" id="file">
+        <br><br>
         <button type="submit">Загрузить</button>
     </form>
 {% endblock %}

@@ -4,10 +4,14 @@
 
 {% block content %}
     {% include 'includes/navbar.html' %}
-    <h2>Покупки  </h2>
+    <h2>Добавление покупок из временной таблицы  </h2>
     {{ message }}
     <form method="post">
         {% csrf_token %}
+        <input type="radio" id="add" name="select" value="add" checked>
+        <label for="add"> Добавить </label><br>
+        <input type="radio" id="skip" name="select" value="skip">
+        <label for="skip"> Пропустить </label><br><br>
         {% for field in form %}
             <div class="form-style {% if field.errors %} errors {% endif %} ">
                 {{ field.label_tag }}

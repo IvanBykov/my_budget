@@ -101,3 +101,15 @@ class Buy(models.Model):
 
     def unit_price(self):
         return self.price / self.amount
+
+
+class BuyTmp(models.Model):
+    name = models.CharField(max_length=50)
+    amount = models.FloatField(validators=[MinValueValidator(0), ])
+    price_unit = models.FloatField(validators=[MinValueValidator(0), ])
+    price_buy = models.FloatField(validators=[MinValueValidator(0), ])
+    date = models.DateField(null=True, blank=True)
+    magazine = models.ForeignKey(Magazine, models.PROTECT)
+
+    def load_buy(self):
+        return reverse('load_buy')
