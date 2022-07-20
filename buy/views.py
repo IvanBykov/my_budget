@@ -4,12 +4,9 @@ from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from .libs.import_buy import import_buy
-from .models import Product, Buy, Brand, Category, Unit, Magazine
+from .models import Product, Buy, Brand, Category, Unit, Magazine, BuyTmp
 from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm, GetDatePeriod
 from buy.libs.utils import get_plot, delta_price
-
-
-# Create your views here.
 
 
 def index(request):
@@ -17,8 +14,6 @@ def index(request):
 
 
 def show_plot_price(request, pk: int):
-    # x = [1, 5, 4, 7, 2]
-    # y = [1, 2, 3, 4, 5, 6, 7]
     form = GetDatePeriod()
     if request.method == 'POST':
         date_start = request.POST['date_start']
@@ -33,7 +28,6 @@ def show_plot_price(request, pk: int):
             'form': form,
             'pk': pk
         })
-    # prices = Buy.objects.filter(Q(product=pk) & Q(date__gte='2022-05-20') & Q(date__lte='2022-05-27')).order_by('date')
     prices = Buy.objects.filter(Q(product=pk)).order_by('date')
     y = [y.unit_price() for y in prices]
     x = [x.date for x in prices]
@@ -47,7 +41,6 @@ def show_plot_price(request, pk: int):
 
 def show_list_price(request, pk: int):
     form = GetDatePeriod()
-    # prices = Buy.objects.all()
     if request.method == 'POST':
         date_start = request.POST['date_start']
         date_end = request.POST['date_end']
@@ -229,11 +222,54 @@ def storage_file(file):
 
 class LoadBuy(View):
     def get(self, request):
-        return render(request, 'buy/load_buy.html')
+        magazines = Magazine.objects.all()
+        return render(request, 'buy/load_buy.html', context={
+            'magazines': magazines
+        })
 
     def post(self, request):
         storage_file(request.FILES['email'])
         products = import_buy()
-        return render(request, 'buy/load_list_buy.html', context={
-            'products': products
+        date = request.POST['date']
+        magazine = Magazine.objects.get(pk=request.POST['fav_magazine'])
+        for product in products:
+            BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date, magazine=magazine).save()
+        return render(request, 'buy/load_buy.html', context={
+            'message': 'данные загружены'
         })
+
+
+def insert_buy(request):
+    if request.method == 'POST':
+        form = BuyForm(request.POST)
+        if form.is_valid() and request.POST['select'] == 'add':
+            form.save()
+            buy_tmp = BuyTmp.objects.last()
+            buy_tmp.delete()
+            if len(BuyTmp.objects.all()) == 0:
+                return render(request, 'buy/import_buy.html', context={
+                    'message': 'данные для импорта отсутствуют'
+                })
+            buy_tmp = BuyTmp.objects.last()
+            buy = Buy(amount=buy_tmp.amount, price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine)
+            form = BuyForm(instance=buy)
+            return render(request, 'buy/import_buy.html', context={
+                'form': form,
+                'message': buy_tmp.name,
+                #'id': buy_tmp.pk
+            })
+        elif form.is_valid() and request.POST['select'] == 'skip':
+            buy_tmp = BuyTmp.objects.last()
+            buy_tmp.delete()
+    if len(BuyTmp.objects.all()) == 0:
+                return render(request, 'buy/import_buy.html', context={
+                    'message': 'данные для импорта отсутствуют'
+                })
+    buy_tmp = BuyTmp.objects.last()
+    buy = Buy(amount=buy_tmp.amount, price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine)
+    form = BuyForm(instance=buy)
+    return render(request, 'buy/import_buy.html', context={
+        'form': form,
+        'message': buy_tmp.name,
+        #'id': buy_tmp.pk
+    })

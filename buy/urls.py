@@ -1,6 +1,8 @@
 from . import views
 from django.urls import path
 
+from .views import insert_buy
+
 urlpatterns = [
     path('', views.index, name='index'),
     #path('buy/price', views.ListPrice.as_view(), name='list-price'),
@@ -30,5 +32,6 @@ urlpatterns = [
     path('magazine/<int:pk>', views.UpdateMagazine.as_view(), name='update-magazine'),
     path('magazine/new', views.CreateMagazine.as_view(), name='create-magazine'),
     path('magazine/del/<int:pk>', views.DeleteMagazine.as_view(), name='del-magazine'),
-    path('load_buy', views.LoadBuy.as_view(), name='load_buy'),
+    path('load_buy/', views.LoadBuy.as_view(), name='load_buy'),
+    path('insert/', insert_buy, name='insert_buy'),
 ]
