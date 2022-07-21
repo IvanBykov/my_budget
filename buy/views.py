@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from .libs.import_buy import import_buy
+from .libs.import_buy import import_buy, parse_name
 from .models import Product, Buy, Brand, Category, Unit, Magazine, BuyTmp
 from .forms import BrandForm, BuyForm, ProductForm, CategoryForm, UnitForm, MagazineForm, GetDatePeriod
 from buy.libs.utils import get_plot, delta_price
@@ -251,7 +251,11 @@ def insert_buy(request):
                     'message': 'данные для импорта отсутствуют'
                 })
             buy_tmp = BuyTmp.objects.last()
-            buy = Buy(amount=buy_tmp.amount, price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine)
+            name_split = parse_name(buy_tmp.name)
+            brand = Brand.objects.filter(name=name_split['brand']).last()
+            unit = Unit.objects.filter(name_mini=name_split['unit']).last()
+            product = Product.objects.filter(name=name_split['name']).last()
+            buy = Buy(amount=buy_tmp.amount * name_split['weight'], price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine, brand=brand, unit=unit, product=product)
             form = BuyForm(instance=buy)
             return render(request, 'buy/import_buy.html', context={
                 'form': form,
@@ -266,7 +270,11 @@ def insert_buy(request):
                     'message': 'данные для импорта отсутствуют'
                 })
     buy_tmp = BuyTmp.objects.last()
-    buy = Buy(amount=buy_tmp.amount, price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine)
+    name_split = parse_name(buy_tmp.name)
+    brand = Brand.objects.filter(name=name_split['brand']).last()
+    unit = Unit.objects.filter(name_mini=name_split['unit']).last()
+    product = Product.objects.filter(name=name_split['name']).last()
+    buy = Buy(amount=buy_tmp.amount * name_split['weight'], price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine, brand=brand, unit=unit, product=product)
     form = BuyForm(instance=buy)
     return render(request, 'buy/import_buy.html', context={
         'form': form,
