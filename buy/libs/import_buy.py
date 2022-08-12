@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 
 from buy.libs.decoder import decode_str
-from buy.models import BuyTmp
 
 
 def import_buy():
@@ -39,13 +38,6 @@ def parse_name(input_str: str):
             step += 1
         else:
             break
-    name = ''
-    #for word in words[step:]:
-    #    if word.isalpha():
-    #        name += word + ' '
-    #        step += 1
-    #    else:
-    #        break
     name = words[step]
     weight = ''
     unit = ''

@@ -2,8 +2,6 @@ import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
 
-from django.db.models import QuerySet
-
 
 def get_graph():
     buffer = BytesIO()
@@ -33,7 +31,7 @@ def delta_price(list_buy):
     # возвращает изменение в % между первым и последним элементом списка
     if len(list_buy) > 0:
         first_value = list_buy[0].unit_price()
-        last_value = list_buy[len(list_buy)-1].unit_price()
+        last_value = list_buy[len(list_buy) - 1].unit_price()
         delta = (last_value - first_value) / first_value * 100
         return delta
     else:

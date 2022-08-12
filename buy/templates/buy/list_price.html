@@ -14,12 +14,16 @@
         </form>
         <table>
             <tr>
+                <th>Товар</th>
+                <th>Брэнд</th>
                 <th>Цена</th>
                 <th>Дата</th>
             </tr>
                 {% for product in object_list %}
                     <tr>
-                        <td> {{ product.unit_price }} </td>
+                        <td> {{ product.product.name }} </td>
+                        <td> {{ product.brand.name }} </td>
+                        <td> {{ product.unit_price|floatformat:2 }} </td>
                         <td> {{ product.date|date:"Y-m-d" }} </td>
                     </tr>
                 {% endfor %}

@@ -93,6 +93,10 @@ class ListBuy(ListView):
     template_name = 'buy/list_buy.html'
     model = Buy
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
+
 
 class CreateBuy(CreateView):
     model = Buy
@@ -233,7 +237,8 @@ class LoadBuy(View):
         date = request.POST['date']
         magazine = Magazine.objects.get(pk=request.POST['fav_magazine'])
         for product in products:
-            BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date, magazine=magazine).save()
+            BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date,
+                   magazine=magazine).save()
         return render(request, 'buy/load_buy.html', context={
             'message': 'данные загружены'
         })
@@ -244,40 +249,51 @@ def insert_buy(request):
         form = BuyForm(request.POST)
         if form.is_valid() and request.POST['select'] == 'add':
             form.save()
-            buy_tmp = BuyTmp.objects.last()
+            buy_tmp = BuyTmp.objects.first()
             buy_tmp.delete()
             if len(BuyTmp.objects.all()) == 0:
                 return render(request, 'buy/import_buy.html', context={
                     'message': 'данные для импорта отсутствуют'
                 })
-            buy_tmp = BuyTmp.objects.last()
+            buy_tmp = BuyTmp.objects.first()
             name_split = parse_name(buy_tmp.name)
-            brand = Brand.objects.filter(name=name_split['brand']).last()
-            unit = Unit.objects.filter(name_mini=name_split['unit']).last()
-            product = Product.objects.filter(name=name_split['name']).last()
-            buy = Buy(amount=buy_tmp.amount * name_split['weight'], price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine, brand=brand, unit=unit, product=product)
+            brand = Brand.objects.filter(name=name_split['brand']).first()
+            unit = Unit.objects.filter(name_mini=name_split['unit']).first()
+            product = Product.objects.filter(name=name_split['name']).first()
+            buy = Buy(amount=buy_tmp.amount * name_split['weight'],
+                      price=buy_tmp.price_buy,
+                      date=buy_tmp.date,
+                      magazine=buy_tmp.magazine,
+                      brand=brand,
+                      unit=unit,
+                      product=product
+                      )
             form = BuyForm(instance=buy)
             return render(request, 'buy/import_buy.html', context={
                 'form': form,
                 'message': buy_tmp.name,
-                #'id': buy_tmp.pk
             })
         elif form.is_valid() and request.POST['select'] == 'skip':
-            buy_tmp = BuyTmp.objects.last()
+            buy_tmp = BuyTmp.objects.first()
             buy_tmp.delete()
     if len(BuyTmp.objects.all()) == 0:
-                return render(request, 'buy/import_buy.html', context={
-                    'message': 'данные для импорта отсутствуют'
-                })
-    buy_tmp = BuyTmp.objects.last()
+        return render(request, 'buy/import_buy.html', context={
+            'message': 'данные для импорта отсутствуют'
+        })
+    buy_tmp = BuyTmp.objects.first()
     name_split = parse_name(buy_tmp.name)
-    brand = Brand.objects.filter(name=name_split['brand']).last()
-    unit = Unit.objects.filter(name_mini=name_split['unit']).last()
-    product = Product.objects.filter(name=name_split['name']).last()
-    buy = Buy(amount=buy_tmp.amount * name_split['weight'], price=buy_tmp.price_buy, date=buy_tmp.date, magazine=buy_tmp.magazine, brand=brand, unit=unit, product=product)
+    brand = Brand.objects.filter(name=name_split['brand']).first()
+    unit = Unit.objects.filter(name_mini=name_split['unit']).first()
+    product = Product.objects.filter(name=name_split['name']).first()
+    buy = Buy(amount=buy_tmp.amount * name_split['weight'],
+              price=buy_tmp.price_buy,
+              date=buy_tmp.date,
+              magazine=buy_tmp.magazine,
+              brand=brand,
+              unit=unit,
+              product=product)
     form = BuyForm(instance=buy)
     return render(request, 'buy/import_buy.html', context={
         'form': form,
         'message': buy_tmp.name,
-        #'id': buy_tmp.pk
     })
