@@ -6,8 +6,8 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class GetDatePeriod(forms.Form):
-    date_start = forms.DateField(label='Начальная дата (ГГГГ-ММ-ДД)', widget=DateInput())
-    date_end = forms.DateField(label='Конечная дата (ГГГГ-ММ-ДД)', widget=DateInput())
+    date_start = forms.DateField(label='Начальная дата ', widget=DateInput())
+    date_end = forms.DateField(label='Конечная дата ', widget=DateInput())
 
 
 class BrandForm(forms.ModelForm):

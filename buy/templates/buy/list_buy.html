@@ -7,6 +7,11 @@
     <br>
     <a href=" {% url 'create-buy' %} " > Добавить покупку </a>
     <h2>Все покупки </h2>
+    <form action="{% url 'list-buy' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit"> Запросить покупки </button>
+        </form>
     <table>
         <tr>
             <th>Товар</th>
@@ -27,4 +32,5 @@
             </tr>
         {% endfor %}
     </table>
+    <h2>Итого за период {{ sum.price__sum|floatformat:2 }}</h2>
 {% endblock %}
