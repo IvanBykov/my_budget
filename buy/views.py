@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -61,6 +61,25 @@ def show_list_price(request, pk: int):
         'object_list': prices,
         'form': form,
         'pk': pk,
+    })
+
+
+def show_period_expenses(request):
+    form = GetDatePeriod()
+    if request.method == 'POST':
+        date_start = request.POST['date_start']
+        date_end = request.POST['date_end']
+        buy = Buy.objects.filter(Q(date__gte=date_start) & Q(date__lte=date_end)).order_by('date')
+        sum_in_period = Buy.objects.filter(Q(date__gte=date_start) & Q(date__lte=date_end)).aggregate(Sum('price'))
+        return render(request, 'buy/list_buy.html', {
+            'date_start': date_start,
+            'date_end': date_end,
+            'object_list': buy,
+            'form': form,
+            'sum': sum_in_period,
+        })
+    return render(request, 'buy/list_buy.html', {
+        'form': form,
     })
 
 
