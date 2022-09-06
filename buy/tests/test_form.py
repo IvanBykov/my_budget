@@ -19,7 +19,6 @@ class MagazineFormTest(Settings):
             follow=True
         )
         self.assertEqual(2, Magazine.objects.count())
-        # 41:22
         saved_magaz = Magazine.objects.last()
         self.assertEqual('Тестовый магазин', saved_magaz.name)
         self.assertEqual('тестовый адрес', saved_magaz.address)
@@ -55,7 +54,6 @@ class ProductFormTest(Settings):
     def test_product_valid_form(self):
         form_data = {
             'name': 'Тестовый продукт',
-            #'category': self.category,
         }
         #надо проверить категорию
         response = self.client.post(
@@ -66,19 +64,14 @@ class ProductFormTest(Settings):
         self.assertEqual(2, Product.objects.count())
         saved_prod = Product.objects.last()
         self.assertEqual('Тестовый продукт', saved_prod.name)
-        #self.assertEqual('', saved_prod.category.name)
 
 class BuyFormTest(Settings):
     def test_buy_valid_form(self):
         self.assertEqual(1, Buy.objects.count())
         form_data = {
-            #'product': self.product,
             'amount': '3',
             'date': '2022-05-20',
-            #'unit': self.unit,
-            #'magazine': self.magazine,
             'price': '12.5',
-            #'brand': self.brand
         }
         response = self.client.post(
             reverse('create-buy'),
@@ -88,4 +81,3 @@ class BuyFormTest(Settings):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(1, Buy.objects.count())
         saved_buy = Buy.objects.last()
-        #self.assertEqual('', saved_buy.amount)

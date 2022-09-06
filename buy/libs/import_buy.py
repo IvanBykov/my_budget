@@ -24,7 +24,6 @@ def import_buy():
             if len(product) == 4 and type(product[1]) == float and type(product[2]) == float and type(
                     product[3]) == float:
                 products.append(product)
-                # BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3]).save()
     return products
 
 

@@ -112,10 +112,6 @@ class ListBuy(ListView):
     template_name = 'buy/list_buy.html'
     model = Buy
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
-
 
 class CreateBuy(CreateView):
     model = Buy
@@ -255,9 +251,17 @@ class LoadBuy(View):
         products = import_buy()
         date = request.POST['date']
         magazine = Magazine.objects.get(pk=request.POST['fav_magazine'])
+        querysetlist = []
         for product in products:
-            BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date,
-                   magazine=magazine).save()
+            querysetlist.append(BuyTmp(name=product[0],
+                                       amount=product[1],
+                                       price_unit=product[2],
+                                       price_buy=product[3],
+                                       date=date,
+                                       magazine=magazine))
+        BuyTmp.objects.bulk_create(querysetlist)
+            # BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date,
+            #       magazine=magazine).save()
         return render(request, 'buy/load_buy.html', context={
             'message': 'данные загружены'
         })
