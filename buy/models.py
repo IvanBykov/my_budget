@@ -3,7 +3,6 @@ from django.core.validators import MinValueValidator
 from django.urls import reverse
 
 
-
 class Brand(models.Model):
     name = models.CharField(max_length=40)
 
@@ -106,7 +105,7 @@ class BuyTmp(models.Model):
     price_unit = models.FloatField(validators=[MinValueValidator(0), ])
     price_buy = models.FloatField(validators=[MinValueValidator(0), ])
     date = models.DateField(null=True, blank=True)
-    magazine = models.ForeignKey(Magazine, models.PROTECT)
+    magazine = models.ForeignKey(Magazine, models.PROTECT, null=True, blank=True)
 
     def load_buy(self):
         return reverse('load_buy')

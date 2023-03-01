@@ -20,12 +20,14 @@ class CreateProductViewTest(Settings):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/product.html', response.template_name[0])
 
+
 class UpdateProductViewTest(Settings):
     def test_update_product_view(self):
         url = reverse('update-product', args=[self.product.pk])
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/product.html', response.template_name[0])
+
 
 class DeleteProductViewTest(Settings):
     def test_delete_product_view(self):
@@ -34,11 +36,13 @@ class DeleteProductViewTest(Settings):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/del_form.html', response.template_name[0])
 
+
 class ListBuyViewTest(Settings):
     def test_list_buy_view(self):
         url = reverse('list-buy')
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
+
 
 class CreateBuyViewTest(Settings):
     def test_create_buy_view(self):
@@ -47,13 +51,14 @@ class CreateBuyViewTest(Settings):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/buy.html', response.template_name[0])
 
+
 class UpdateBuyViewTest(Settings):
     def test_update_buy_view(self):
-        #print(self.buy.pk)
         url = reverse('update-buy', args=[self.buy.pk])
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/buy.html', response.template_name[0])
+
 
 class DeleteBuyViewTest(Settings):
     def test_delete_buy_view(self):
@@ -62,6 +67,7 @@ class DeleteBuyViewTest(Settings):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/del_form.html', response.template_name[0])
 
+
 class ListBrandViewTest(Settings):
     def test_list_brand_view(self):
         url = reverse('list-brand')
@@ -69,8 +75,10 @@ class ListBrandViewTest(Settings):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/list_brand.html', response.template_name[0])
 
+
 class LoadBuyViewTest(Settings):
     def test_load_buy_view(self):
         url = reverse('load_buy')
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual('buy/load_buy.html', response.templates[0].name)

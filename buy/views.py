@@ -260,8 +260,8 @@ class LoadBuy(View):
                                        date=date,
                                        magazine=magazine))
         BuyTmp.objects.bulk_create(querysetlist)
-            # BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date,
-            #       magazine=magazine).save()
+        # BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date,
+        #       magazine=magazine).save()
         return render(request, 'buy/load_buy.html', context={
             'message': 'данные загружены'
         })
