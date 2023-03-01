@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 
-from buy.models import Brand, Category, Product, Unit, Magazine, Buy
+from buy.models import Brand, Category, Product, Unit, Magazine, Buy, BuyTmp
 
 
 class Settings(TestCase):
@@ -30,6 +30,14 @@ class Settings(TestCase):
             magazine=cls.magazine,
             price=15,
             brand=cls.brand
+        )
+        cls.buy_tmp = BuyTmp.objects.create(
+            name='name',
+            amount=1,
+            price_unit=2,
+            price_buy=2,
+            date='2022-06-12',
+            magazine=cls.magazine,
         )
 
 
@@ -131,3 +139,15 @@ class BuyModelTest(Settings):
 
     def test_get_price(self):
         self.assertEqual(7.5, self.buy.unit_price())
+
+    def test_get_url(self):
+        self.assertEquals(f'/buy/{self.buy.pk}', self.buy.get_url())
+
+    def test_del_url(self):
+        self.assertEqual(f'/buy/del/{self.buy.pk}', self.buy.del_url())
+
+
+class BuyTmpModelTest(Settings):
+    def test_load_buy(self):
+        # print(self.buy_tmp.load_buy())
+        self.assertEqual('/load_buy/', self.buy_tmp.load_buy())

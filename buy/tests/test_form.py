@@ -26,7 +26,7 @@ class MagazineFormTest(Settings):
     def test_magazine_invalid_form(self):
         self.assertEqual(1, Magazine.objects.count())
         form_data = {
-            'name': 'a'*51
+            'name': 'a' * 51
 
         }
         response = self.client.post(
@@ -35,6 +35,7 @@ class MagazineFormTest(Settings):
             follow=True
         )
         self.assertEqual(1, Magazine.objects.count())
+
 
 class BrandFormTest(Settings):
     def test_brand_valid_form(self):
@@ -50,12 +51,13 @@ class BrandFormTest(Settings):
         self.assertEqual(2, Brand.objects.count())
         self.assertEqual('Тестовый брэнд', saved_brand.name)
 
+
 class ProductFormTest(Settings):
     def test_product_valid_form(self):
         form_data = {
             'name': 'Тестовый продукт',
         }
-        #надо проверить категорию
+        # надо проверить категорию
         response = self.client.post(
             reverse('create-product'),
             data=form_data,
@@ -64,6 +66,7 @@ class ProductFormTest(Settings):
         self.assertEqual(2, Product.objects.count())
         saved_prod = Product.objects.last()
         self.assertEqual('Тестовый продукт', saved_prod.name)
+
 
 class BuyFormTest(Settings):
     def test_buy_valid_form(self):

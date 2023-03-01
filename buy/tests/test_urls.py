@@ -1,7 +1,6 @@
 from django.urls import reverse
 from rest_framework import status
 
-
 from buy.tests.test_models import Settings
 
 
@@ -15,7 +14,6 @@ class UrlsCaseTest(Settings):
         url = reverse('list-buy')
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-
 
     def test_create_buy_get(self):
         url = reverse('create-buy')
@@ -71,3 +69,4 @@ class UrlsCaseTest(Settings):
         url = reverse('create-magazine')
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
+
