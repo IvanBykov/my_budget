@@ -149,5 +149,4 @@ class BuyModelTest(Settings):
 
 class BuyTmpModelTest(Settings):
     def test_load_buy(self):
-        # print(self.buy_tmp.load_buy())
         self.assertEqual('/load_buy/', self.buy_tmp.load_buy())

@@ -8,13 +8,20 @@
     {{ message }}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <!--
         <label  for="name">Дата чека</label>
         <br>
         <input type="date" name="date" id="name">
         <br>
+        -->
         {% for magazine in magazines %}
-            <input type="radio" id="{{ magazine.pk }}" name="fav_magazine" value="{{ magazine.pk }}">
-         <label for="{{ magazine.pk }}"> {{ magazine.name }} </label><br>
+            {% if forloop.first %}
+                <input type="radio" id="{{ magazine.pk }}" name="fav_magazine" value="{{ magazine.pk }} " checked>
+             <label for="{{ magazine.pk }}"> {{ magazine.name }} </label><br>
+            {% else %}
+                 <input type="radio" id="{{ magazine.pk }}" name="fav_magazine" value="{{ magazine.pk }}">
+              <label for="{{ magazine.pk }}"> {{ magazine.name }} </label><br>
+            {% endif %}
         {% endfor %}
         <label  for="file">Файл</label>
         <br>

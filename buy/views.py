@@ -249,7 +249,7 @@ class LoadBuy(View):
     def post(self, request):
         storage_file(request.FILES['email'])
         products = import_buy()
-        date = request.POST['date']
+        # date = request.POST['date']
         magazine = Magazine.objects.get(pk=request.POST['fav_magazine'])
         querysetlist = []
         for product in products:
@@ -257,7 +257,9 @@ class LoadBuy(View):
                                        amount=product[1],
                                        price_unit=product[2],
                                        price_buy=product[3],
-                                       date=date,
+                                       #date=date,
+                                       #date=product[4],
+                                       date=product[4][6:10]+'-'+product[4][3:5]+'-'+product[4][:2],
                                        magazine=magazine))
         BuyTmp.objects.bulk_create(querysetlist)
         # BuyTmp(name=product[0], amount=product[1], price_unit=product[2], price_buy=product[3], date=date,

@@ -10,6 +10,8 @@ def import_buy():
     data = soup.find('table', class_='3D"w95"')
     products = list()
     rows = data.find_all('tr')
+    string_with_date = decode_str(rows[8].text).split('\n')
+    check_date = string_with_date[1][:10]
     for row in rows[20:]:
         split_row = decode_str(row.text).split('\n')
         product = list()
@@ -23,6 +25,7 @@ def import_buy():
                     product.append(col.strip())
             if len(product) == 4 and type(product[1]) == float and type(product[2]) == float and type(
                     product[3]) == float:
+                product.append(check_date)
                 products.append(product)
     return products
 

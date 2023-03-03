@@ -82,3 +82,4 @@ class LoadBuyViewTest(Settings):
         response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual('buy/load_buy.html', response.templates[0].name)
+        self.assertEqual('buy/load_buy.html', response.templates[0].name)
