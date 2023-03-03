@@ -5,6 +5,7 @@ from .models import Brand, Buy, Product, Category, Unit, Magazine
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
 class GetDatePeriod(forms.Form):
     date_start = forms.DateField(label='Начальная дата ', widget=DateInput())
     date_end = forms.DateField(label='Конечная дата ', widget=DateInput())
@@ -26,7 +27,7 @@ class BuyForm(forms.ModelForm):
         labels = {
             'product': 'Товар',
             'amount': 'Количество',
-            'date': 'Дата',
+            'date': 'Дата (mm/dd/yyyy)',
             'unit': 'Единица измерения',
             'magazine': 'Магазин',
             'price': 'Стоимость',
