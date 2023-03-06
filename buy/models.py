@@ -6,6 +6,9 @@ from django.urls import reverse
 class Brand(models.Model):
     name = models.CharField(max_length=40)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return self.name
 
@@ -18,6 +21,9 @@ class Brand(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=60)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return self.name
@@ -32,6 +38,9 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, models.PROTECT, null=True, blank=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return self.name
@@ -53,6 +62,9 @@ class Unit(models.Model):
     name = models.CharField(max_length=20)
     name_mini = models.CharField(max_length=5)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return self.name
 
@@ -66,6 +78,9 @@ class Unit(models.Model):
 class Magazine(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return f'{self.name} - {self.address}'
@@ -85,6 +100,9 @@ class Buy(models.Model):
     magazine = models.ForeignKey(Magazine, models.PROTECT)
     price = models.FloatField(validators=[MinValueValidator(0), ])
     brand = models.ForeignKey(Brand, models.PROTECT, null=True, blank=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return f'{self.product} - {self.brand} {self.magazine} - {self.date}'
@@ -106,6 +124,9 @@ class BuyTmp(models.Model):
     price_buy = models.FloatField(validators=[MinValueValidator(0), ])
     date = models.DateField(null=True, blank=True)
     magazine = models.ForeignKey(Magazine, models.PROTECT, null=True, blank=True)
+
+    class Meta:
+        ordering = ['id']
 
     def load_buy(self):
         return reverse('load_buy')
