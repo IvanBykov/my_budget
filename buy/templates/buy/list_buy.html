@@ -18,6 +18,7 @@
             <th>Брэнд</th>
             <th>Цена</th>
             <th>Количество</th>
+            <th>Ед. измерения</th>
             <th>Дата</th>
             <th>Удалить запись</th>
         </tr>
@@ -27,10 +28,11 @@
                 <td> {{ buy.brand }} </td>
                 <td> {{ buy.price }} </td>
                 <td> {{ buy.amount }} </td>
+                <td> {{ buy.unit }} </td>
                 <td> {{ buy.date|date:"Y-m-d" }} </td>
                 <td> <a href=" {{ buy.del_url }} ">Удалить запись</a> </td>
             </tr>
         {% endfor %}
     </table>
-    <h2>Итого за период {{ sum.price__sum|floatformat:2 }}</h2>
+    <h2>Итого за период с {{ date_start }} по {{ date_end }} потрачено {{ sum.price__sum|floatformat:2 }}</h2>
 {% endblock %}
