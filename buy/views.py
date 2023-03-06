@@ -85,6 +85,7 @@ def show_period_expenses(request):
 
 class ListProduct(ListView):
     template_name = 'buy/list_product.html'
+    paginate_by = 20
     model = Product
 
 
@@ -109,6 +110,7 @@ class DeleteProduct(DeleteView):
 
 
 class ListBuy(ListView):
+    paginate_by = 20
     template_name = 'buy/list_buy.html'
     model = Buy
 
@@ -134,6 +136,7 @@ class DeleteBuy(DeleteView):
 
 
 class ListBrand(ListView):
+    paginate_by = 20
     template_name = 'buy/list_brand.html'
     model = Brand
 
@@ -159,6 +162,7 @@ class DeleteBrand(DeleteView):
 
 
 class ListCategory(ListView):
+    paginate_by = 20
     template_name = 'buy/list_category.html'
     model = Category
 
@@ -184,6 +188,7 @@ class DeleteCategory(DeleteView):
 
 
 class ListUnit(ListView):
+    paginate_by = 20
     template_name = 'buy/list_unit.html'
     model = Unit
 
@@ -209,6 +214,7 @@ class DeleteUnit(DeleteView):
 
 
 class ListMagazine(ListView):
+    paginate_by = 20
     template_name = 'buy/list_magazine.html'
     model = Magazine
 
