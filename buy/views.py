@@ -2,6 +2,7 @@ from django.db.models import Q, Sum
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from datetime import datetime
 
 from .libs.import_buy import import_buy, parse_name
 from .models import Product, Buy, Brand, Category, Unit, Magazine, BuyTmp
@@ -72,8 +73,8 @@ def show_period_expenses(request):
         buy = Buy.objects.filter(Q(date__gte=date_start) & Q(date__lte=date_end)).order_by('date')
         sum_in_period = Buy.objects.filter(Q(date__gte=date_start) & Q(date__lte=date_end)).aggregate(Sum('price'))
         return render(request, 'buy/list_buy.html', {
-            'date_start': date_start,
-            'date_end': date_end,
+            'date_start': datetime.strptime(date_start, '%Y-%m-%d').date(),
+            'date_end': datetime.strptime(date_end, '%Y-%m-%d').date(),
             'object_list': buy,
             'form': form,
             'sum': sum_in_period,
@@ -263,8 +264,8 @@ class LoadBuy(View):
                                        amount=product[1],
                                        price_unit=product[2],
                                        price_buy=product[3],
-                                       #date=date,
-                                       #date=product[4],
+                                       # date=date,
+                                       # date=product[4],
                                        date=product[4][6:10]+'-'+product[4][3:5]+'-'+product[4][:2],
                                        magazine=magazine))
         BuyTmp.objects.bulk_create(querysetlist)
