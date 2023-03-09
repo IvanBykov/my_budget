@@ -15,8 +15,8 @@ def index(request):
 
 
 def show_plot_price(request, pk: int):
-    form = GetDatePeriod()
     if request.method == 'POST':
+        form = GetDatePeriod(request.POST)
         date_start = request.POST['date_start']
         date_end = request.POST['date_end']
         prices = Buy.objects.filter(Q(product=pk) & Q(date__gte=date_start) & Q(date__lte=date_end)).order_by(
@@ -29,6 +29,8 @@ def show_plot_price(request, pk: int):
             'form': form,
             'pk': pk
         })
+    else:
+        form = GetDatePeriod()
     prices = Buy.objects.filter(Q(product=pk)).order_by('date')
     y = [y.unit_price() for y in prices]
     x = [x.date for x in prices]
@@ -41,19 +43,21 @@ def show_plot_price(request, pk: int):
 
 
 def show_list_price(request, pk: int):
-    form = GetDatePeriod()
     if request.method == 'POST':
+        form = GetDatePeriod(request.POST)
         date_start = request.POST['date_start']
         date_end = request.POST['date_end']
         prices = Buy.objects.filter(Q(product=pk) & Q(date__gte=date_start) & Q(date__lte=date_end))
         return render(request, 'buy/list_price.html', {
-            'date_start': date_start,
-            'date_end': date_end,
+            'date_start': datetime.strptime(date_start, '%Y-%m-%d').date(),
+            'date_end': datetime.strptime(date_end, '%Y-%m-%d').date(),
             'delta_price': delta_price(prices),
             'object_list': prices,
             'form': form,
             'pk': pk,
         })
+    else:
+        form = GetDatePeriod()
     prices = Buy.objects.filter(Q(product=pk)).order_by('date')
     return render(request, 'buy/list_price.html', {
         'date_start': prices[0].date,
@@ -66,8 +70,8 @@ def show_list_price(request, pk: int):
 
 
 def show_period_expenses(request):
-    form = GetDatePeriod()
     if request.method == 'POST':
+        form = GetDatePeriod(request.POST)
         date_start = request.POST['date_start']
         date_end = request.POST['date_end']
         buy = Buy.objects.filter(Q(date__gte=date_start) & Q(date__lte=date_end)).order_by('date')
@@ -79,6 +83,8 @@ def show_period_expenses(request):
             'form': form,
             'sum': sum_in_period,
         })
+    else:
+        form = GetDatePeriod()
     return render(request, 'buy/list_buy.html', {
         'form': form,
     })
