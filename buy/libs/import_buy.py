@@ -12,7 +12,8 @@ def import_buy():
     rows = data.find_all('tr')
     string_with_date = decode_str(rows[8].text).split('\n')
     check_date = string_with_date[1][:10]
-    for row in rows[20:]:
+    # for row in rows[20:]:
+    for row in rows:
         split_row = decode_str(row.text).split('\n')
         product = list()
         for col in split_row:
